@@ -28,35 +28,5 @@ pipeline {
 		    sh "echo Build"
 	   }
 	}
-	stage('Enable service'){
-		steps {
-		    sh '''
-		    echo "sudo docker run -it -p 82:80 -d devopsdemo"
-		    '''
-	        }
-	}
-	stage('Configure servers with Docker and deploy website') {
-            	steps {
-			sh '''
-			echo "ansible-playbook docker.yaml -e hostname=${servername}"
-			'''
-            	}
-        }
-	stage('Install Chrome browser') {
-            	steps {
-                	sh '''
-			echo "ansible-playbook chrome.yaml -e hostname=localhost"
-			'''
-            	}
-        }
-	stage ('Testing'){
-		steps {
-			sh "sudo apt remove python3-pip -y"
-			sh "sudo apt install python3-pip -y"
-			sh "pip3 install selenium"
-			//sh "python3 selenium_test.py ${params.serverIP}"
-		}
-	}
-	
 	   
 }
